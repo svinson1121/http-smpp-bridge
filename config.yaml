@@ -1,0 +1,11 @@
+smpp_peer:
+  system_id: smsgw
+  password: smsgw
+  ipaddress: 10.90.250.42
+  system_type: "default"
+  port: 2775
+
+http_server:
+  bind_ip: 0.0.0.0
+  port: 8080
+  kamailio_url: "http://10.90.250.53:8080/sms/"

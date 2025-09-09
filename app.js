@@ -82,6 +82,14 @@ smppSession.on('pdu', async (pdu) => {
 //  HTTP SERVER 
 const app = express();
 
+// Log every HTTP request
+app.use((req, res, next) => {
+  const clientIp = req.ip || req.connection.remoteAddress;
+  console.log(`HTTP request: ${clientIp} ${req.method} ${req.originalUrl}`);
+  next();
+});
+
+
 // Kamailio will call: GET /send_sms?from=1234&to=5678&text=Hello&dcs=0
 app.get('/send_sms', (req, res) => {
   const { from, to, text, dcs } = req.query;

@@ -31,8 +31,6 @@ smppSession.bind_transceiver({
   password: smppConf.password,
   system_type: smppConf.system_type || '', // optional
   interface_version: 0x34, // SMPP v3.4
-  addr_ton: 0, // Type of Number (can adjust if needed)
-  addr_npi: 1, // Numbering Plan Indicator (1 = ISDN/E.164)
   address_range: ''
 }, (pdu) => {
   if (pdu.command_status === 0) {

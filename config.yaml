@@ -1,11 +1,32 @@
+logging:
+  file_path: "./app.log"
+  max_size: "20m" # Max size per log file (e.g., 20MB)
+  max_files: 5    # Keep up to 5 rotated log files
+  console_enabled: true    # enable or disable console logging.
+  log_level: "info" # Options: "info" or "debug"
+
 smpp_peer:
-  system_id: smsgw
-  password: smsgw
-  ipaddress: 10.90.250.42
-  system_type: "default"
-  port: 2775
+  system_id: smsgw    # remote peer system ID
+  password: smsgw     # remote peer password
+  ipaddress: 10.90.250.42 # remote peer IP address
+  system_type: "default"  
+  port: 2775		# remote peer port
+  reconnect_interval: 10000 # Time (in milliseconds) to waits before attempting to reconnect to the SMPP server
+  source_addr_ton: 1 # International
+  source_addr_npi: 1 # ISDN/E.164
+  dest_addr_ton: 1   # International
+  dest_addr_npi: 1   # ISDN/E.164
+
+smpp_server: 
+  bind_ip: "0.0.0.0"   # local address where we listen for SMPP connections 
+  port: 2775	       # local port the SMPP server is on
+  auth:
+    - system_id: "client1"		
+      password: "client1pass"
+    - system_id: "client2"
+      password: "client2pass"
 
 http_server:
-  bind_ip: 0.0.0.0
-  port: 8080
-  kamailio_url: "http://10.90.250.53:8080/sms/"
+  bind_ip: 0.0.0.0	# local address where we run out HTTP API server
+  port: 8080		# local port for the API Server
+  kamailio_url: "http://10.90.250.53:8080/sms/"       # URL where we submit messages to Kamailio's HTTP API

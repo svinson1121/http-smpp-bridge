@@ -131,3 +131,15 @@ route[SMS] {
 }
 ````
 
+and in your osmo-msc.cfg  add the smpp server:
+
+```
+smpp
+ local-tcp-ip 10.90.250.42 2775
+ system-id msc0
+ policy closed
+ smpp-first
+ esme smsgw
+  password smsgw
+  default-route
+````

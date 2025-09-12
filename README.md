@@ -2,7 +2,9 @@
 
 ### Thanks to Supreeth Herle  https://github.com/herlesupreeth  for his input on this project!
 #################################################################################################
-### example Kanailio SMSC - (HTTP API) <-> http-smpp-bridge - SMPP <-> Osmocom-MSC    <- or other SMPP server. 
+### example: Kamailio SMSC - (HTTP API) <-> http-smpp-bridge - (SMPP CLient) <-> Osmocom-MSC    <- or other SMPP server. 
+
+###  I also add a SMPP server to accept messages from a SMPP client:   SMPP Client - (SMPP server) -> http-smpp-bridge ->  (HTTP API) - Kamailio SMSC  
 
 # install node v24.3.0 and npm
 
@@ -11,6 +13,9 @@
 * edit config.yaml
 
 * npm run app   or node app.js to start the bridge
+
+
+* any messages set to the SMPP server will be delivered to kamailio over the HTTP API
 
 
 * edit kamailio_smsc.cfg

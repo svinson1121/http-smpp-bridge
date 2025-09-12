@@ -45,10 +45,7 @@ event_route[xhttp:request] {
                 xlog("TEXT $avp(text)\n");
                 xlog("DCS  $avp(dcs)\n");
 #!endif
-        #if ($avp(to) == "491771782261")
-        #       $avp(to) = "494046895124";
-        #if ($avp(to) == "491771782319")
-        #       $avp(to) = "494034927220";
+       
 
                 route(SMS);
         }
@@ -79,9 +76,6 @@ route[SMS_TO_OUTBOUND] {
 
         http_client_query("http://10.90.250.186:8080/send_sms?from=$avp(from)&to=$avp(to)&text=$(avp(text){s.escape.user})&dcs=$avp(dcs)", "$var(result)");
         if ($retcode != 200) return -1;
-        #json_get_field("$var(result)", "messages", "$var(messages)");
-        #json_get_field("$var(messages)", "status", "$var(status)");
-        #if ($var(status) != 0) return -1;
         return 1;
 }
 
@@ -119,11 +113,11 @@ route[SMS] {
 
 
         # Query ENUM: Local number?
-        #$var(enum) = "+"+$avp(to);
-        #if (!enum_pv_query("$var(enum)")) {
-        #       route(SMS_TO_OUTBOUND);
-        #       return $retcode;
-        #}
+        $var(enum) = "+"+$avp(to);
+        if (!enum_pv_query("$var(enum)")) {
+               route(SMS_TO_OUTBOUND);
+               return $retcode;
+        }
         if (sql_query("sms", "insert into messages (caller, callee, text, dcs, valid) values ('$(avp(from){s.escape.common})', '$(avp(to){s.escape.common})', '$avp(text)', $avp(dcs), now());"))
                 return 1;
         else
